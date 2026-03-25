@@ -4,496 +4,861 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wired Differently, Nourished Differently — ND & Eating Disorders Affinity Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --sage:       #84A98C;
-      --sage-lt:    #CAD2C5;
-      --sage-dk:    #52796F;
-      --blush:      #FFCBA4;
-      --blush-dk:   #E07A5F;
-      --cream:      #FAF7F2;
-      --warm-white: #FFFDF9;
-      --ink:        #2D2D2D;
-      --ink-soft:   #5C5C5C;
-      --ink-muted:  #8A8A8A;
-      --gold:       #D4A853;
-      --lavender:   #C9B8D8;
-      --lav-dk:     #9B84B8;
+      --sage:        #7A9E7E;
+      --sage-lt:     #A8C5AB;
+      --sage-dk:     #4E7A52;
+      --blush:       #E8A598;
+      --blush-dk:    #C0705F;
+      --lavender:    #B8A8D0;
+      --lav-dk:      #8A78B0;
+      --gold:        #C4975A;
+      --gold-pale:   #F0DDB8;
+      --parchment:   #F7F2EA;
+      --parchment-dk:#EDE4D4;
+      --parchment-lt:#FDFAF5;
+      --ink:         #2A1F14;
+      --ink-faded:   #5A4535;
+      --ink-light:   #8A7060;
+      --shadow:      rgba(42, 31, 20, 0.12);
 
-      --grad-sage:  linear-gradient(135deg, #84A98C 0%, #52796F 100%);
-      --grad-blush: linear-gradient(135deg, #FFCBA4 0%, #E07A5F 100%);
-      --grad-warm:  linear-gradient(135deg, #84A98C 0%, #FFCBA4 100%);
-      --grad-lav:   linear-gradient(135deg, #C9B8D8 0%, #9B84B8 100%);
+      --grad-sage:   linear-gradient(135deg, #7A9E7E 0%, #4E7A52 100%);
+      --grad-blush:  linear-gradient(135deg, #E8A598 0%, #C0705F 100%);
+      --grad-lav:    linear-gradient(135deg, #B8A8D0 0%, #8A78B0 100%);
+      --grad-gold:   linear-gradient(135deg, #C4975A 0%, #9A6E38 100%);
+      --grad-warm:   linear-gradient(135deg, #7A9E7E 0%, #B8A8D0 100%);
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--cream);
+      font-family: 'EB Garamond', Georgia, serif;
+      background-color: var(--parchment);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
       min-height: 100vh;
       color: var(--ink);
       overflow-x: hidden;
     }
 
-    /* Soft background blobs */
-    .blob {
+    body::before {
+      content: '';
       position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.18;
-      animation: drift 24s infinite ease-in-out;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 40%, rgba(122,158,126,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 20%, rgba(184,168,208,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 55% 85%, rgba(232,165,152,0.06) 0%, transparent 45%);
       pointer-events: none;
       z-index: 0;
     }
-    .blob1 { width:380px;height:380px;background:var(--sage);top:-100px;right:-80px; }
-    .blob2 { width:460px;height:460px;background:var(--blush);bottom:-140px;left:-120px;animation-delay:-8s; }
-    .blob3 { width:280px;height:280px;background:var(--lavender);top:45%;right:10%;animation-delay:-15s; }
+
+    /* Page border */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 10px;
+      border: 1px solid rgba(196,151,90,0.18);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* Floating background runes */
+    .bg-rune {
+      position: fixed;
+      font-family: 'Cinzel', serif;
+      font-size: 3.5rem;
+      opacity: 0.04;
+      animation: drift 32s infinite ease-in-out;
+      pointer-events: none;
+      color: var(--sage-dk);
+    }
+    .bg-rune:nth-child(1) { top: 8%;  left: 4%;  animation-delay: 0s; }
+    .bg-rune:nth-child(2) { top: 42%; right: 6%; animation-delay: -10s; }
+    .bg-rune:nth-child(3) { bottom: 18%; left: 12%; animation-delay: -19s; }
+    .bg-rune:nth-child(4) { top: 68%; right: 18%; animation-delay: -25s; }
 
     @keyframes drift {
-      0%,100% { transform:translate(0,0) scale(1); }
-      33%      { transform:translate(24px,-20px) scale(1.06); }
-      66%      { transform:translate(-16px,16px) scale(0.95); }
+      0%,100% { transform: translate(0,0) rotate(0deg); }
+      33%      { transform: translate(14px,-18px) rotate(3deg); }
+      66%      { transform: translate(-10px,12px) rotate(-2deg); }
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
     .container {
-      max-width: 860px;
+      max-width: 1060px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
+      padding: 2rem 2.5rem 4rem;
       position: relative;
       z-index: 1;
     }
 
-    /* Header */
+    /* ── Header ── */
     .site-header {
       text-align: center;
       padding: 2.5rem 0 2rem;
+      border-bottom: 1px solid rgba(196,151,90,0.25);
+      margin-bottom: 2rem;
     }
-    .tag-line {
-      font-size: 0.75rem;
+    .header-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
-      color: var(--sage-dk);
+      color: var(--gold);
+      display: block;
       margin-bottom: 0.75rem;
     }
     .site-header h1 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      line-height: 1.2;
-      background: var(--grad-warm);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-family: 'Cinzel', serif;
+      font-size: 2.3rem;
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      line-height: 1.18;
+      color: var(--ink);
       margin-bottom: 0.5rem;
+    }
+    .site-header h1 em {
+      font-style: normal;
+      color: var(--sage-dk);
     }
     .site-header .subtitle {
-      font-size: 1.05rem;
-      color: var(--ink-soft);
       font-style: italic;
+      font-size: 1.1rem;
+      color: var(--ink-faded);
       margin-bottom: 0.5rem;
     }
-    .session-badge {
-      display: inline-block;
-      background: var(--sage-lt);
-      color: var(--sage-dk);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 0.3rem 1rem;
-      border-radius: 20px;
-      margin-top: 0.5rem;
+    .header-ornament {
+      margin-top: 1rem;
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 0.6em;
     }
 
-    /* Welcome card */
-    .welcome-card {
-      background: var(--warm-white);
-      border-radius: 16px;
-      padding: 1.8rem 2rem;
-      margin-bottom: 2rem;
-      border-left: 4px solid var(--sage);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .welcome-card p {
-      color: var(--ink-soft);
-      line-height: 1.75;
-      font-size: 1rem;
-    }
-    .welcome-card p + p { margin-top: 0.75rem; }
-
-    /* Section headers */
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--sage-dk);
-      margin-bottom: 0.5rem;
-      margin-top: 2.5rem;
-    }
-    .section-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 1.2rem;
-    }
-
-    /* Check-in circle */
-    .checkin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .checkin-card {
-      background: var(--warm-white);
-      border-radius: 14px;
-      padding: 1.2rem 1.4rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border-top: 3px solid var(--sage);
-    }
-    .checkin-card.blush { border-top-color: var(--blush-dk); }
-    .checkin-card.lav   { border-top-color: var(--lav-dk); }
-    .checkin-card.gold  { border-top-color: var(--gold); }
-    .checkin-card h3 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--ink);
-    }
-    .checkin-card p {
-      font-size: 0.88rem;
-      color: var(--ink-soft);
-      line-height: 1.6;
-      font-style: italic;
-    }
-
-    /* Content blocks */
-    .content-block {
-      background: var(--warm-white);
-      border-radius: 16px;
-      padding: 1.8rem 2rem;
-      margin-bottom: 1.2rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-    .content-block h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .content-block p {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      line-height: 1.75;
-    }
-    .content-block p + p { margin-top: 0.6rem; }
-
-    /* Insight callout */
-    .insight {
-      background: linear-gradient(135deg, #84A98C18 0%, #FFCBA418 100%);
-      border-radius: 14px;
-      padding: 1.2rem 1.5rem;
-      margin: 1rem 0;
-      border-left: 3px solid var(--sage);
-    }
-    .insight p {
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      line-height: 1.7;
-    }
-    .insight strong { color: var(--sage-dk); }
-
-    /* Strategy cards */
-    .strategy-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .strategy-card {
-      background: var(--warm-white);
-      border-radius: 14px;
-      padding: 1.4rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      position: relative;
+    /* ── Progress ── */
+    .progress-wrap {
+      height: 5px;
+      background: rgba(196,151,90,0.15);
+      border-radius: 10px;
+      margin-bottom: 1.8rem;
       overflow: hidden;
     }
-    .strategy-card::before {
+    .progress-fill {
+      height: 100%;
+      background: var(--grad-warm);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    /* ── Nav pills ── */
+    .nav-pills {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .nav-pill {
+      padding: 0.5rem 1.4rem;
+      border-radius: 0;
+      background: transparent;
+      border: 1px solid rgba(196,151,90,0.35);
+      color: var(--ink-faded);
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.25s;
+    }
+    .nav-pill:hover {
+      background: rgba(196,151,90,0.08);
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+    .nav-pill.active {
+      background: var(--ink);
+      color: var(--gold-pale);
+      border-color: var(--ink);
+    }
+
+    /* ── Sections ── */
+    .section { display: none; animation: reveal 0.45s ease; }
+    .section.active { display: block; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--parchment-lt);
+      border: 1px solid rgba(196,151,90,0.2);
+      border-radius: 3px;
+      padding: 2rem;
+      margin-bottom: 1.8rem;
+      position: relative;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+    .card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 4px;
-      background: var(--grad-sage);
+      height: 3px;
     }
-    .strategy-card.blush::before { background: var(--grad-blush); }
-    .strategy-card.lav::before   { background: var(--grad-lav); }
-    .strategy-card .card-icon {
-      font-size: 1.6rem;
-      margin-bottom: 0.6rem;
-      display: block;
+    .card.sage::before   { background: var(--grad-sage); }
+    .card.blush::before  { background: var(--grad-blush); }
+    .card.lav::before    { background: var(--grad-lav); }
+    .card.gold::before   { background: var(--grad-gold); }
+    .card.warm::before   { background: var(--grad-warm); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid rgba(196,151,90,0.18);
+      flex-wrap: wrap;
     }
-    .strategy-card h3 {
-      font-size: 0.95rem;
+    .card-sym { font-size: 1.2rem; color: var(--gold); flex-shrink: 0; }
+    .card-header h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--ink);
-      margin-bottom: 0.5rem;
+      letter-spacing: 0.03em;
     }
-    .strategy-card p {
-      font-size: 0.88rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
+    .timing-tag {
+      margin-left: auto;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-light);
+      border: 1px solid rgba(196,151,90,0.28);
+      padding: 0.18rem 0.6rem;
+      border-radius: 2px;
     }
 
-    /* Discussion prompts */
+    .body-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--ink-faded);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Pass reminder ── */
+    .pass-note {
+      display: flex;
+      gap: 0.6rem;
+      background: rgba(122,158,126,0.08);
+      border-left: 3px solid var(--sage);
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 1.4rem;
+      font-size: 0.97rem;
+      color: var(--ink-faded);
+      font-style: italic;
+    }
+    .pass-sym { color: var(--sage-dk); flex-shrink: 0; }
+
+    /* ── Info blocks ── */
+    .info-block {
+      padding: 1rem 1.3rem;
+      border-radius: 3px;
+      margin-bottom: 0.9rem;
+    }
+    .info-block h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.55rem;
+    }
+    .info-block ul, .info-block ol {
+      list-style: none;
+      color: var(--ink-faded);
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+    .info-block ul li::before { content: "◆  "; font-size: 0.55rem; }
+    .info-block ol { counter-reset: item; }
+    .info-block ol li { counter-increment: item; }
+    .info-block ol li::before { content: counter(item) ". "; font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; }
+
+    .info-block.sage     { background: rgba(122,158,126,0.08); }
+    .info-block.sage h3  { color: var(--sage-dk); }
+    .info-block.sage ul li::before { color: var(--sage-dk); }
+
+    .info-block.blush    { background: rgba(232,165,152,0.1); }
+    .info-block.blush h3 { color: var(--blush-dk); }
+    .info-block.blush ul li::before { color: var(--blush-dk); }
+
+    .info-block.lav      { background: rgba(184,168,208,0.1); }
+    .info-block.lav h3   { color: var(--lav-dk); }
+    .info-block.lav ul li::before { color: var(--lav-dk); }
+
+    .info-block.gold     { background: rgba(196,151,90,0.07); }
+    .info-block.gold h3  { color: var(--gold); }
+    .info-block.gold ul li::before { color: var(--gold); }
+
+    /* ── Strategy grid ── */
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 1.4rem;
+    }
+    .strategy-card {
+      background: var(--parchment-lt);
+      border: 1px solid rgba(196,151,90,0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      transition: transform 0.28s, box-shadow 0.28s;
+      cursor: default;
+    }
+    .strategy-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px var(--shadow);
+    }
+    .strategy-card-top {
+      padding: 0.9rem 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .strategy-card-top span {
+      font-size: 1.3rem;
+    }
+    .strategy-card-top h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.95);
+      text-transform: uppercase;
+    }
+    .strategy-card-body {
+      padding: 0.9rem 1.1rem;
+      font-size: 1rem;
+      line-height: 1.72;
+      color: var(--ink-faded);
+    }
+    .sc-sage  .strategy-card-top { background: var(--grad-sage); }
+    .sc-blush .strategy-card-top { background: var(--grad-blush); }
+    .sc-lav   .strategy-card-top { background: var(--grad-lav); }
+    .sc-gold  .strategy-card-top { background: var(--grad-gold); }
+
+    /* ── Prompt list ── */
     .prompt-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.75rem;
     }
     .prompt-list li {
-      background: var(--warm-white);
-      border-radius: 12px;
-      padding: 1rem 1.2rem 1rem 1.5rem;
+      background: var(--parchment-lt);
+      border: 1px solid rgba(196,151,90,0.18);
       border-left: 3px solid var(--blush-dk);
-      font-size: 0.95rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+      border-radius: 0 3px 3px 0;
+      padding: 1rem 1.2rem;
+      font-size: 1rem;
+      color: var(--ink-faded);
+      line-height: 1.7;
+      box-shadow: 0 2px 8px var(--shadow);
     }
     .prompt-list li strong {
       display: block;
-      color: var(--ink);
-      font-size: 0.85rem;
-      margin-bottom: 0.25rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blush-dk);
+      margin-bottom: 0.3rem;
     }
 
-    /* Takeaway box */
-    .takeaway-box {
-      background: linear-gradient(135deg, #84A98C22 0%, #C9B8D822 100%);
-      border-radius: 16px;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 2rem;
+    /* ── Callout / bridge ── */
+    .callout {
+      background: rgba(122,158,126,0.07);
+      border: 1px solid rgba(122,158,126,0.25);
+      border-radius: 3px;
+      padding: 1.3rem 1.6rem;
+      margin: 1.2rem 0;
     }
-    .takeaway-box h3 {
-      font-size: 1.1rem;
+    .callout-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
       font-weight: 700;
-      color: var(--ink);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage-dk);
+      display: block;
       margin-bottom: 0.5rem;
     }
-    .takeaway-box p {
+    .callout p {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--ink-faded);
+      line-height: 1.75;
+    }
+    .callout strong { color: var(--ink); font-style: normal; }
+
+    /* ── Agreements grid ── */
+    .agreements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+      gap: 0.7rem;
+    }
+    .agreement-item {
+      background: rgba(196,151,90,0.06);
+      border: 1px solid rgba(196,151,90,0.2);
+      border-radius: 3px;
+      padding: 0.85rem 1rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.73rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--ink-faded);
+      text-align: center;
+      line-height: 1.55;
+    }
+    .agreement-item .ag-sym {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.3rem;
       font-size: 0.95rem;
-      color: var(--ink-soft);
-      line-height: 1.7;
     }
 
-    /* Affirmation strip */
+    /* ── Closing affirmation ── */
     .affirmation {
-      background: var(--grad-warm);
-      border-radius: 14px;
-      padding: 1.5rem 2rem;
+      background: var(--ink);
+      border-radius: 3px;
+      padding: 1.8rem 2rem;
       text-align: center;
-      margin: 1.5rem 0;
+      margin-top: 1.5rem;
     }
     .affirmation p {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: white;
-      line-height: 1.6;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--gold-pale);
+      letter-spacing: 0.04em;
     }
 
-    /* Closing */
-    .closing {
+    /* ── Expandable fac note ── */
+    .fac-toggle {
+      background: rgba(122,158,126,0.06);
+      border: 1px solid rgba(122,158,126,0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 1.2rem;
+    }
+    .fac-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 0.75rem 1.1rem;
+      text-align: left;
+      cursor: pointer;
+      font-family: 'Cinzel', serif;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--sage-dk);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .fac-btn-arrow { transition: transform 0.25s; }
+    .fac-btn-arrow.open { transform: rotate(90deg); }
+    .fac-content { display: none; padding: 0 1.1rem 1rem; font-size: 0.97rem; color: var(--ink-faded); line-height: 1.8; }
+    .fac-content.open { display: block; }
+    .fac-content strong { color: var(--ink); }
+
+    /* ── Footer ── */
+    .site-footer {
       text-align: center;
       padding: 1.5rem;
-      color: var(--ink-muted);
-      font-size: 0.9rem;
-      font-style: italic;
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--ink-light);
+      border-top: 1px solid rgba(196,151,90,0.2);
+      margin-top: 2rem;
     }
 
-    @media (max-width: 600px) {
-      .site-header h1 { font-size: 1.7rem; }
+    @media (max-width: 640px) {
       .container { padding: 1.5rem 1rem 3rem; }
-      .content-block { padding: 1.4rem; }
+      .site-header h1 { font-size: 1.75rem; }
+      .strategy-grid { grid-template-columns: 1fr; }
+      body::after { inset: 4px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="blob blob1"></div>
-  <div class="blob blob2"></div>
-  <div class="blob blob3"></div>
+  <!-- floating bg runes -->
+  <div class="bg-rune" aria-hidden="true">✦</div>
+  <div class="bg-rune" aria-hidden="true">◈</div>
+  <div class="bg-rune" aria-hidden="true">✦</div>
+  <div class="bg-rune" aria-hidden="true">◈</div>
 
   <div class="container">
 
     <!-- Header -->
     <header class="site-header">
-      <div class="tag-line">ND & Eating Disorders Affinity Group</div>
-      <h1>Wired Differently,<br>Nourished Differently</h1>
-      <p class="subtitle">Practical strategies for ND brains & food</p>
-      <span class="session-badge">Session 1 &nbsp;·&nbsp; Practical Strategies</span>
+      <span class="header-eyebrow">ND &amp; Eating Disorders &nbsp;·&nbsp; Affinity Group</span>
+      <h1>Wired Differently,<br><em>Nourished</em> Differently</h1>
+      <p class="subtitle">Practical strategies for ND brains &amp; food</p>
+      <div class="header-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
     </header>
 
-    <!-- Welcome -->
-    <div class="welcome-card">
-      <p>Welcome. This is a space built for people who know what it's like to have a complicated relationship with food <em>and</em> a brain that works differently. You don't have to explain yourself here.</p>
-      <p>Today we're not talking about rules or meal plans. We're talking about what actually helps — the real, messy, creative workarounds that ND people use to take care of themselves. Because what works for neurotypical brains often doesn't work for ours, and that's not a personal failure. That's neuroscience.</p>
+    <!-- Progress bar -->
+    <div class="progress-wrap">
+      <div class="progress-fill" id="progressFill" style="width: 20%"></div>
     </div>
 
-    <!-- Check-in -->
-    <div class="section-label">Opening</div>
-    <div class="section-title">Check-In Circle</div>
-    <div class="checkin-grid">
-      <div class="checkin-card">
-        <h3>How's your nervous system right now?</h3>
-        <p>"Flooded, frazzled, okay, or somewhere in between?"</p>
+    <!-- Nav -->
+    <nav class="nav-pills" role="tablist">
+      <button class="nav-pill active" onclick="showSection('welcome',this,20)">Welcome</button>
+      <button class="nav-pill" onclick="showSection('understanding',this,40)">The Connection</button>
+      <button class="nav-pill" onclick="showSection('strategies',this,60)">Strategies</button>
+      <button class="nav-pill" onclick="showSection('discussion',this,80)">Discussion</button>
+      <button class="nav-pill" onclick="showSection('closing',this,100)">Closing</button>
+    </nav>
+
+    <!-- ══ SECTION: WELCOME ══ -->
+    <div class="section active" id="welcome">
+
+      <div class="card warm">
+        <div class="card-header">
+          <span class="card-sym">✦</span>
+          <h2>Welcome to This Space</h2>
+          <span class="timing-tag">5 min</span>
+        </div>
+        <p class="body-text">Welcome. This is a space built for people who know what it's like to have a complicated relationship with food <em>and</em> a brain that works differently. You don't have to explain yourself here — or perform okay-ness.</p>
+        <p class="body-text">Today we're not talking about rules, meal plans, or the right way to eat. We're talking about what actually helps — the real, sometimes messy, creative workarounds ND people use to take care of themselves. Because what works for neurotypical brains often doesn't work for ours, and that's not a personal failure. That's neuroscience.</p>
+
+        <div class="pass-note">
+          <span class="pass-sym">◇</span>
+          <span>You are always welcome to pass. Listening and breathing count as full participation here.</span>
+        </div>
       </div>
-      <div class="checkin-card blush">
-        <h3>One word for your relationship with food today</h3>
-        <p>"No explanation needed — just a word."</p>
+
+      <div class="card sage">
+        <div class="card-header">
+          <span class="card-sym">◈</span>
+          <h2>Group Agreements</h2>
+        </div>
+        <div class="agreements-grid">
+          <div class="agreement-item"><span class="ag-sym">◇</span>What's shared here, stays here</div>
+          <div class="agreement-item"><span class="ag-sym">◇</span>You can always pass</div>
+          <div class="agreement-item"><span class="ag-sym">◇</span>Speak from your own experience</div>
+          <div class="agreement-item"><span class="ag-sym">◇</span>No advice unless asked</div>
+          <div class="agreement-item"><span class="ag-sym">◇</span>All brains are welcome</div>
+          <div class="agreement-item"><span class="ag-sym">◇</span>Silence is sacred too</div>
+        </div>
       </div>
-      <div class="checkin-card lav">
-        <h3>What brought you here?</h3>
-        <p>"A sentence or two — or a shrug — totally fine."</p>
+
+      <div class="card lav">
+        <div class="card-header">
+          <span class="card-sym">✦</span>
+          <h2>Check-In Circle</h2>
+          <span class="timing-tag">10 min</span>
+        </div>
+        <p class="body-text">Go around the room. Take what feels right, leave what doesn't.</p>
+        <div class="info-block lav">
+          <h3>One or Two Questions — Your Choice</h3>
+          <ul>
+            <li>How's your nervous system right now? (Flooded, frazzled, okay, somewhere in between?)</li>
+            <li>One word for your relationship with food today — no explanation needed</li>
+            <li>One small hope for this hour</li>
+          </ul>
+        </div>
       </div>
-      <div class="checkin-card gold">
-        <h3>One hope for today</h3>
-        <p>"Even a small one counts."</p>
+
+    </div><!-- /welcome -->
+
+    <!-- ══ SECTION: UNDERSTANDING ══ -->
+    <div class="section" id="understanding">
+
+      <div class="card blush">
+        <div class="card-header">
+          <span class="card-sym">◈</span>
+          <h2>Why Food is Hard for ND Brains</h2>
+          <span class="timing-tag">10 min</span>
+        </div>
+        <p class="body-text">ND brains — whether ADHD, autistic, or both — often have a different relationship with <em>interoception</em>: the body's ability to sense internal signals like hunger, fullness, and thirst. When interoception is muted, unreliable, or works on a time delay, eating "normally" is genuinely harder. Not because of character. Because of wiring.</p>
+        <p class="body-text">Add in sensory sensitivities around food textures and smells, executive function challenges that make cooking feel impossible, and emotional dysregulation that turns hunger and fullness into background noise — and food becomes a complicated daily negotiation, not a simple choice.</p>
+
+        <div class="callout">
+          <span class="callout-label">Research Note</span>
+          <p>Studies show autistic people are significantly more likely to experience ARFID, anorexia, and binge eating. ADHD is strongly linked to binge-restrict cycles. <strong>This isn't coincidence — it's neurobiology.</strong></p>
+        </div>
       </div>
-    </div>
 
-    <!-- Why ND brains & food -->
-    <div class="section-label">Understanding the Connection</div>
-    <div class="section-title">Why Food is Hard for ND Brains</div>
+      <div class="card sage">
+        <div class="card-header">
+          <span class="card-sym">✦</span>
+          <h2>The Shame Loop</h2>
+        </div>
+        <p class="body-text">When eating feels chaotic or out of control, we often blame ourselves. "I should be able to do this basic human thing." But the shame spiral creates more nervous system dysregulation — which makes eating even harder. It's a loop, not a character flaw.</p>
 
-    <div class="content-block">
-      <h3>It's not about willpower</h3>
-      <p>ND brains — whether ADHD, autistic, or both — often have a different relationship with interoception, the body's ability to sense internal signals like hunger, fullness, and thirst. When interoception is muted or inconsistent, eating "normally" is genuinely harder.</p>
-      <p>Add sensory sensitivities, executive function challenges, and emotional dysregulation into the mix, and food becomes a complicated daily negotiation — not a simple choice.</p>
-    </div>
+        <div class="info-block sage">
+          <h3>What the Loop Looks Like</h3>
+          <ul>
+            <li>Can't initiate eating → skip meals → dysregulation spikes</li>
+            <li>Sensory overwhelm → restrict → binge → shame</li>
+            <li>Emotional flooding → eating to regulate → guilt → more flooding</li>
+            <li>Shame about the loop → harder to ask for help</li>
+          </ul>
+        </div>
 
-    <div class="insight">
-      <p><strong>Something to sit with:</strong> Research shows autistic people are significantly more likely to experience ARFID, anorexia, and binge eating. ADHD is strongly linked to binge eating and restriction cycles. This isn't coincidence — it's neurobiology.</p>
-    </div>
-
-    <div class="content-block">
-      <h3>The shame spiral that makes it worse</h3>
-      <p>When eating feels chaotic, we often blame ourselves. But the shame spiral — "I should be able to do this basic thing" — creates more nervous system dysregulation, which makes eating even harder. It's a loop, not a character flaw.</p>
-    </div>
-
-    <!-- Practical strategies -->
-    <div class="section-label">What Actually Helps</div>
-    <div class="section-title">Practical Strategies for ND Brains</div>
-
-    <div class="strategy-grid">
-      <div class="strategy-card">
-        <span class="card-icon">⏰</span>
-        <h3>Timed reminders instead of hunger cues</h3>
-        <p>If your hunger signals are unreliable, external cues can substitute. Phone alarms, watch vibrations, or a "eating anchor" tied to an existing routine (after your morning meds, at the halfway point of your workday).</p>
+        <div class="fac-toggle">
+          <button class="fac-btn" onclick="toggleFac(this)">
+            <span class="fac-btn-arrow">▶</span>
+            FACILITATOR NOTE — SITTING WITH THIS
+          </button>
+          <div class="fac-content">
+            <p>Pause here and invite reflection: <strong>"Does any of this sound familiar — even a little bit?"</strong> You don't need to fix the loop today. Naming it is already something. Give a moment of quiet before moving on.</p>
+          </div>
+        </div>
       </div>
-      <div class="strategy-card blush">
-        <span class="card-icon">🧩</span>
-        <h3>Safe foods are not failures</h3>
-        <p>Having go-to foods that feel safe, predictable, and low-effort is adaptive — not avoidance. Building a personal "safe food list" you can return to on hard days is a valid strategy, full stop.</p>
+
+    </div><!-- /understanding -->
+
+    <!-- ══ SECTION: STRATEGIES ══ -->
+    <div class="section" id="strategies">
+
+      <div class="card sage">
+        <div class="card-header">
+          <span class="card-sym">✦</span>
+          <h2>Practical Strategies for ND Brains</h2>
+          <span class="timing-tag">15 min</span>
+        </div>
+        <p class="body-text">These aren't rules. They're starting points — things other ND people have found actually useful. Take what fits. Leave the rest.</p>
       </div>
-      <div class="strategy-card lav">
-        <span class="card-icon">🧠</span>
-        <h3>Lower the decision load</h3>
-        <p>Decision fatigue hits ND brains hard. Reducing choices — same breakfast rotation, pre-decided snacks, a short list of "good enough" meals — preserves energy for things that matter more to you.</p>
+
+      <div class="strategy-grid">
+
+        <div class="strategy-card sc-sage">
+          <div class="strategy-card-top">
+            <span>⏰</span>
+            <h3>External Hunger Cues</h3>
+          </div>
+          <div class="strategy-card-body">
+            If your hunger signals are unreliable, external cues can substitute. Phone alarms, watch vibrations, or anchoring eating to an existing routine — after morning meds, at the halfway point of the workday — instead of waiting to feel hungry.
+          </div>
+        </div>
+
+        <div class="strategy-card sc-blush">
+          <div class="strategy-card-top">
+            <span>🧩</span>
+            <h3>Safe Foods are Not Failures</h3>
+          </div>
+          <div class="strategy-card-body">
+            Having go-to foods that feel predictable, low-effort, and sensory-okay is adaptive, not avoidance. Building a personal "safe food list" you return to on hard days is a valid strategy. Full stop.
+          </div>
+        </div>
+
+        <div class="strategy-card sc-lav">
+          <div class="strategy-card-top">
+            <span>🧠</span>
+            <h3>Reduce the Decision Load</h3>
+          </div>
+          <div class="strategy-card-body">
+            Decision fatigue hits ND brains hard. A rotating breakfast, pre-decided snacks, a short "good enough meals" list — reducing choices preserves energy for things that matter more to you.
+          </div>
+        </div>
+
+        <div class="strategy-card sc-gold">
+          <div class="strategy-card-top">
+            <span>🎧</span>
+            <h3>Pair Eating with Something Regulating</h3>
+          </div>
+          <div class="strategy-card-body">
+            Eating in silence can feel activating or dissociating for ND people. Pairing meals with a podcast, show, or background noise can meaningfully lower the threshold to actually eat.
+          </div>
+        </div>
+
+        <div class="strategy-card sc-sage">
+          <div class="strategy-card-top">
+            <span>🌡️</span>
+            <h3>Translate Hunger Differently</h3>
+          </div>
+          <div class="strategy-card-body">
+            Instead of "am I hungry?" try: "am I low energy, irritable, or losing focus?" These are often how hunger shows up in ND bodies — the body's way of speaking a different dialect.
+          </div>
+        </div>
+
+        <div class="strategy-card sc-blush">
+          <div class="strategy-card-top">
+            <span>🛒</span>
+            <h3>Shop for Your Worst-Day Self</h3>
+          </div>
+          <div class="strategy-card-body">
+            Stock your kitchen for the version of you who is depleted and can't cook — not the aspirational version. Keeping easy, accessible food on hand means you're more likely to eat something when it counts.
+          </div>
+        </div>
+
+        <div class="strategy-card sc-lav">
+          <div class="strategy-card-top">
+            <span>👥</span>
+            <h3>Body Doubling</h3>
+          </div>
+          <div class="strategy-card-body">
+            Eating with someone — virtually or in person, even without talking — can help with initiation. Body doubling activates different neural pathways for many ND people and makes the whole thing feel more doable.
+          </div>
+        </div>
+
+        <div class="strategy-card sc-gold">
+          <div class="strategy-card-top">
+            <span>💛</span>
+            <h3>Enough is a Moving Target</h3>
+          </div>
+          <div class="strategy-card-body">
+            Some days "enough" is a full meal. Some days it's crackers and cheese at 10pm. Narrowing the gap between "what I ate" and "what I think I should have eaten" is its own form of progress.
+          </div>
+        </div>
+
       </div>
-      <div class="strategy-card">
-        <span class="card-icon">🎧</span>
-        <h3>Pair eating with something regulating</h3>
-        <p>Eating alone in silence can feel activating or dissociating. Pairing meals with a podcast, show, music, or background noise can lower the threshold to actually eat.</p>
+
+      <div class="affirmation">
+        <p>Taking care of your body in a way that works for your brain is not settling.<br>It is creativity. It is survival. It is worth recognizing.</p>
       </div>
-      <div class="strategy-card blush">
-        <span class="card-icon">🌡️</span>
-        <h3>Check in with your body differently</h3>
-        <p>Instead of "am I hungry?" try "am I low energy, irritable, or having trouble concentrating?" — these are often hunger signals ND bodies translate differently.</p>
+
+    </div><!-- /strategies -->
+
+    <!-- ══ SECTION: DISCUSSION ══ -->
+    <div class="section" id="discussion">
+
+      <div class="card lav">
+        <div class="card-header">
+          <span class="card-sym">◈</span>
+          <h2>Group Discussion</h2>
+          <span class="timing-tag">20 min</span>
+        </div>
+        <div class="pass-note">
+          <span class="pass-sym">◇</span>
+          <span>These are invitations, not obligations. You can share, listen, or just breathe.</span>
+        </div>
+
+        <ul class="prompt-list">
+          <li>
+            <strong>Opening Round</strong>
+            What's one way your ND brain makes food harder — something you've never quite been able to explain to someone who doesn't share this experience?
+          </li>
+          <li>
+            <strong>Strategy Sharing</strong>
+            What's something that actually works for you — even a little bit, even imperfectly — that you'd never find in a nutrition guide?
+          </li>
+          <li>
+            <strong>The Shame Piece</strong>
+            Where does shame show up for you around food? What does it tell you? What do you wish it understood about your brain?
+          </li>
+          <li>
+            <strong>Reclaiming Something</strong>
+            Is there something about your relationship with food or your body that you've been told is "wrong" — that you're starting to understand differently now?
+          </li>
+        </ul>
       </div>
-      <div class="strategy-card lav">
-        <span class="card-icon">💛</span>
-        <h3>Enough is a moving target</h3>
-        <p>Some days "enough" is a full meal. Some days it's crackers and cheese at 10pm. Reducing the gap between "what I ate" and "what I think I should have eaten" is progress.</p>
+
+      <div class="card blush">
+        <div class="card-header">
+          <span class="card-sym">✦</span>
+          <h2>If Space Allows</h2>
+        </div>
+        <div class="info-block blush">
+          <h3>Going Deeper</h3>
+          <ul>
+            <li>What would it mean to take care of your body in a way that actually fits your brain — not the standard advice?</li>
+            <li>Who in your life gets it? What makes them safe to talk to about this?</li>
+            <li>What's one thing you'd want someone newly diagnosed with an eating disorder <em>and</em> ND to know?</li>
+          </ul>
+        </div>
       </div>
-    </div>
 
-    <div class="affirmation">
-      <p>"Taking care of your body in a way that works for your brain is not settling. It is creativity. It is survival. It is worth celebrating."</p>
-    </div>
+    </div><!-- /discussion -->
 
-    <!-- Executive function section -->
-    <div class="section-label">The Planning Problem</div>
-    <div class="section-title">Executive Function & Food</div>
+    <!-- ══ SECTION: CLOSING ══ -->
+    <div class="section" id="closing">
 
-    <div class="content-block">
-      <h3>When the fridge feels impossible</h3>
-      <p>Executive function challenges — planning, initiating, sequencing — make cooking genuinely hard, not just inconvenient. Standing in front of an open fridge unable to decide or start is a real executive function moment, not laziness.</p>
-    </div>
-
-    <div class="strategy-grid">
-      <div class="strategy-card">
-        <span class="card-icon">📋</span>
-        <h3>The "body doubling" approach</h3>
-        <p>Eating with someone else (virtually or in person), even without talking, can help with initiation. Body doubling activates different brain pathways for ND folks.</p>
+      <div class="card warm">
+        <div class="card-header">
+          <span class="card-sym">✦</span>
+          <h2>Closing Round</h2>
+          <span class="timing-tag">5 min</span>
+        </div>
+        <p class="body-text">Go around one more time. Take what fits.</p>
+        <div class="info-block gold">
+          <h3>One to Choose From</h3>
+          <ul>
+            <li>One word or sentence you're leaving with today</li>
+            <li>Something that landed — an idea, a shift, a question</li>
+            <li>What you needed to hear — even if you're the one who said it</li>
+          </ul>
+        </div>
       </div>
-      <div class="strategy-card blush">
-        <span class="card-icon">🛒</span>
-        <h3>Shop for your worst-day self</h3>
-        <p>Stocking your kitchen for the version of you who is depleted, dysregulated, and can't cook — not the aspirational version — means you're more likely to eat something when it counts.</p>
+
+      <div class="card sage">
+        <div class="card-header">
+          <span class="card-sym">◈</span>
+          <h2>Something to Carry With You</h2>
+        </div>
+        <div class="callout">
+          <span class="callout-label">A Reminder</span>
+          <p>You are not failing at eating. You are navigating something genuinely complex with a brain that didn't come with a standard manual. <strong>Every small act of nourishment — whatever form it takes — counts.</strong></p>
+        </div>
+
+        <div class="info-block sage">
+          <h3>Between Sessions</h3>
+          <ul>
+            <li>Notice once this week when hunger shows up as something other than hunger — irritability, brain fog, low energy</li>
+            <li>Identify one "worst-day food" you could keep on hand</li>
+            <li>Be curious instead of critical — even once</li>
+          </ul>
+        </div>
       </div>
-      <div class="strategy-card lav">
-        <span class="card-icon">🔁</span>
-        <h3>Rituals over routines</h3>
-        <p>Routines can feel rigid and triggering. Rituals feel intentional and personal. Reframing — "I always have tea when I sit down to eat" — can make the same behavior feel more workable.</p>
+
+      <div class="affirmation">
+        <p>Thank you for being here.<br>You belong in this room exactly as you are.</p>
       </div>
-    </div>
 
-    <!-- Discussion -->
-    <div class="section-label">Group Discussion</div>
-    <div class="section-title">Let's Talk</div>
+    </div><!-- /closing -->
 
-    <ul class="prompt-list">
-      <li>
-        <strong>Opening round</strong>
-        What's one way your ND brain makes food harder — something you've never quite been able to explain to a non-ND person?
-      </li>
-      <li>
-        <strong>Strategy sharing</strong>
-        What's something that actually works for you — even a little bit, even imperfectly — that you'd never find in a nutrition guide?
-      </li>
-      <li>
-        <strong>The shame piece</strong>
-        Where does shame show up for you around food? What does it say? What do you wish it understood about your brain?
-      </li>
-      <li>
-        <strong>Reclaiming something</strong>
-        Is there something around food or your body that you've been told is "wrong" that you're starting to understand differently?
-      </li>
-    </ul>
+    <footer class="site-footer">
+      ND &amp; EATING DISORDERS AFFINITY GROUP &nbsp;·&nbsp; PRACTICAL STRATEGIES SESSION
+    </footer>
 
-    <!-- Takeaway -->
-    <div class="takeaway-box">
-      <h3>Something to carry with you</h3>
-      <p>You are not failing at eating. You are navigating something genuinely complex with a brain that didn't come with a standard manual. Every small act of nourishment — whatever form it takes — counts.</p>
-    </div>
+  </div><!-- /container -->
 
-    <!-- Closing -->
-    <div class="section-label" style="margin-top:2rem;">Closing</div>
-    <div class="section-title">Closing Round</div>
-    <div class="content-block">
-      <h3>One word or sentence</h3>
-      <p>What are you leaving with today — an idea, a feeling, a question, or just a word? There are no wrong answers.</p>
-    </div>
+  <script>
+    function showSection(id, btn, progress) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+      document.getElementById('progressFill').style.width = progress + '%';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-    <div class="closing">
-      Thank you for being here. You belong in this room exactly as you are.
-    </div>
+    function toggleFac(btn) {
+      const arrow = btn.querySelector('.fac-btn-arrow');
+      const content = btn.nextElementSibling;
+      arrow.classList.toggle('open');
+      content.classList.toggle('open');
+    }
+  </script>
 
-  </div>
 </body>
 </html>
