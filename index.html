@@ -10,775 +10,984 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ─── Design Tokens ─── */
     :root {
-      --sage:        #7A9E7E;
-      --sage-lt:     #A8C5AB;
-      --sage-dk:     #4E7A52;
-      --blush:       #E8A598;
-      --blush-dk:    #C0705F;
-      --lavender:    #B8A8D0;
-      --lav-dk:      #8A78B0;
-      --gold:        #C4975A;
-      --gold-pale:   #F0DDB8;
-      --parchment:   #F7F2EA;
-      --parchment-dk:#EDE4D4;
-      --parchment-lt:#FDFAF5;
-      --ink:         #2A1F14;
-      --ink-faded:   #5A4535;
-      --ink-light:   #8A7060;
-      --shadow:      rgba(42, 31, 20, 0.12);
+      /* Palette */
+      --sage:      #7A9E7E;
+      --sage-lt:   #A8C5AB;
+      --sage-dk:   #4E7A52;
+      --blush:     #E8A598;
+      --blush-dk:  #B8604F;
+      --lavender:  #B8A8D0;
+      --lav-dk:    #7A68A8;
+      --gold:      #C49250;
+      --gold-pale: #F0DDB8;
+      --parchment: #F6F0E6;
+      --parchment-dk: #EDE3D0;
+      --parchment-lt: #FDFAF4;
+      --ink:       #241A10;
+      --ink-2:     #4A3828;
+      --ink-3:     #8A7060;
+      --shadow:    rgba(36,26,16,0.10);
+      --shadow-lg: rgba(36,26,16,0.18);
 
-      --grad-sage:   linear-gradient(135deg, #7A9E7E 0%, #4E7A52 100%);
-      --grad-blush:  linear-gradient(135deg, #E8A598 0%, #C0705F 100%);
-      --grad-lav:    linear-gradient(135deg, #B8A8D0 0%, #8A78B0 100%);
-      --grad-gold:   linear-gradient(135deg, #C4975A 0%, #9A6E38 100%);
-      --grad-warm:   linear-gradient(135deg, #7A9E7E 0%, #B8A8D0 100%);
+      /* Gradients */
+      --g-sage:    linear-gradient(135deg, #7A9E7E 0%, #4E7A52 100%);
+      --g-blush:   linear-gradient(135deg, #E8A598 0%, #B8604F 100%);
+      --g-lav:     linear-gradient(135deg, #C4B4DC 0%, #7A68A8 100%);
+      --g-gold:    linear-gradient(135deg, #D4A060 0%, #9A6E30 100%);
+      --g-warm:    linear-gradient(135deg, #7A9E7E 0%, #C4B4DC 100%);
+      --g-earth:   linear-gradient(135deg, #C49250 0%, #7A9E7E 100%);
+
+      /* Type scale */
+      --f-xs:   0.68rem;
+      --f-sm:   0.82rem;
+      --f-base: 1rem;
+      --f-md:   1.1rem;
+      --f-lg:   1.35rem;
+      --f-xl:   1.8rem;
+      --f-2xl:  2.4rem;
+      --f-3xl:  3.2rem;
     }
 
+    /* ─── Base ─── */
     body {
       font-family: 'EB Garamond', Georgia, serif;
       background-color: var(--parchment);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
       min-height: 100vh;
       color: var(--ink);
       overflow-x: hidden;
+      line-height: 1.75;
     }
 
+    /* Ambient color washes */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background:
-        radial-gradient(ellipse at 15% 40%, rgba(122,158,126,0.08) 0%, transparent 55%),
-        radial-gradient(ellipse at 85% 20%, rgba(184,168,208,0.07) 0%, transparent 50%),
-        radial-gradient(ellipse at 55% 85%, rgba(232,165,152,0.06) 0%, transparent 45%);
-      pointer-events: none;
-      z-index: 0;
+        radial-gradient(ellipse 60% 50% at 12% 35%, rgba(122,158,126,.09) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 88% 18%, rgba(196,180,220,.08) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 40% at 60% 88%, rgba(232,165,152,.07) 0%, transparent 50%);
+      pointer-events: none; z-index: 0;
     }
 
-    /* Page border */
+    /* Page frame */
     body::after {
       content: '';
-      position: fixed;
-      inset: 10px;
-      border: 1px solid rgba(196,151,90,0.18);
-      pointer-events: none;
-      z-index: 100;
+      position: fixed; inset: 8px;
+      border: 1px solid rgba(196,146,80,.15);
+      pointer-events: none; z-index: 200;
     }
 
-    /* Floating background runes */
-    .bg-rune {
+    /* Floating background glyphs */
+    .glyph {
       position: fixed;
       font-family: 'Cinzel', serif;
-      font-size: 3.5rem;
-      opacity: 0.04;
-      animation: drift 32s infinite ease-in-out;
-      pointer-events: none;
       color: var(--sage-dk);
+      opacity: .038;
+      animation: glyph-drift 35s ease-in-out infinite;
+      pointer-events: none; user-select: none; z-index: 0;
     }
-    .bg-rune:nth-child(1) { top: 8%;  left: 4%;  animation-delay: 0s; }
-    .bg-rune:nth-child(2) { top: 42%; right: 6%; animation-delay: -10s; }
-    .bg-rune:nth-child(3) { bottom: 18%; left: 12%; animation-delay: -19s; }
-    .bg-rune:nth-child(4) { top: 68%; right: 18%; animation-delay: -25s; }
-
-    @keyframes drift {
+    .glyph-1 { font-size: 5rem; top:  6%; left:  3%; animation-delay:   0s; }
+    .glyph-2 { font-size: 3.5rem; top: 38%; right: 5%; animation-delay: -11s; }
+    .glyph-3 { font-size: 4rem; bottom: 20%; left: 10%; animation-delay: -21s; }
+    .glyph-4 { font-size: 2.8rem; top: 65%; right: 16%; animation-delay: -28s; }
+    @keyframes glyph-drift {
       0%,100% { transform: translate(0,0) rotate(0deg); }
-      33%      { transform: translate(14px,-18px) rotate(3deg); }
-      66%      { transform: translate(-10px,12px) rotate(-2deg); }
+      33%      { transform: translate(16px,-20px) rotate(4deg); }
+      66%      { transform: translate(-12px,14px) rotate(-3deg); }
     }
 
     @keyframes reveal {
-      from { opacity: 0; transform: translateY(14px); }
+      from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
     }
 
+    /* ─── Layout ─── */
     .container {
-      max-width: 1060px;
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 2rem 2.5rem 4rem;
-      position: relative;
-      z-index: 1;
+      padding: 0 2rem 5rem;
+      position: relative; z-index: 1;
     }
 
-    /* ── Header ── */
-    .site-header {
+    /* ─── Site Header / Hero ─── */
+    .site-hero {
       text-align: center;
-      padding: 2.5rem 0 2rem;
-      border-bottom: 1px solid rgba(196,151,90,0.25);
-      margin-bottom: 2rem;
+      padding: 3.5rem 1rem 2.5rem;
+      border-bottom: 1px solid rgba(196,146,80,.22);
+      margin-bottom: 2.4rem;
+      position: relative;
     }
-    .header-eyebrow {
+    .hero-eyebrow {
       font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.45em;
+      font-size: var(--f-xs);
+      letter-spacing: .5em;
       text-transform: uppercase;
       color: var(--gold);
       display: block;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1rem;
     }
-    .site-header h1 {
+    .hero-title {
       font-family: 'Cinzel', serif;
-      font-size: 2.3rem;
+      font-size: clamp(1.9rem, 5vw, 2.8rem);
       font-weight: 900;
-      letter-spacing: 0.03em;
-      line-height: 1.18;
+      letter-spacing: .025em;
+      line-height: 1.15;
       color: var(--ink);
-      margin-bottom: 0.5rem;
+      margin-bottom: .6rem;
     }
-    .site-header h1 em {
+    .hero-title em {
       font-style: normal;
       color: var(--sage-dk);
     }
-    .site-header .subtitle {
+    .hero-sub {
+      font-size: var(--f-md);
       font-style: italic;
-      font-size: 1.1rem;
-      color: var(--ink-faded);
-      margin-bottom: 0.5rem;
+      color: var(--ink-2);
+      margin-bottom: .3rem;
     }
-    .header-ornament {
-      margin-top: 1rem;
-      color: var(--gold);
-      font-size: 0.85rem;
-      letter-spacing: 0.6em;
-    }
-
-    /* ── Progress ── */
-    .progress-wrap {
-      height: 5px;
-      background: rgba(196,151,90,0.15);
-      border-radius: 10px;
-      margin-bottom: 1.8rem;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: var(--grad-warm);
-      border-radius: 10px;
-      transition: width 0.5s ease;
-    }
-
-    /* ── Nav pills ── */
-    .nav-pills {
+    .hero-ornament {
       display: flex;
-      gap: 0.5rem;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
+      gap: 1.2rem;
+      margin-top: 1.4rem;
+      color: var(--gold);
+      font-size: .75rem;
+      letter-spacing: .5em;
     }
-    .nav-pill {
-      padding: 0.5rem 1.4rem;
-      border-radius: 0;
-      background: transparent;
-      border: 1px solid rgba(196,151,90,0.35);
-      color: var(--ink-faded);
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: all 0.25s;
-    }
-    .nav-pill:hover {
-      background: rgba(196,151,90,0.08);
-      border-color: var(--gold);
-      color: var(--ink);
-    }
-    .nav-pill.active {
-      background: var(--ink);
-      color: var(--gold-pale);
-      border-color: var(--ink);
-    }
+    .hero-ornament svg { opacity: .7; }
 
-    /* ── Sections ── */
-    .section { display: none; animation: reveal 0.45s ease; }
+    /* ─── Progress Steps ─── */
+    .progress-strip {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 2.5rem;
+      position: relative;
+      padding: 0 .5rem;
+    }
+    .progress-strip::before {
+      content: '';
+      position: absolute;
+      top: 14px; left: 10%; right: 10%;
+      height: 1px;
+      background: rgba(196,146,80,.2);
+      z-index: 0;
+    }
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      transition: opacity .25s;
+    }
+    .step-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 2px solid rgba(196,146,80,.3);
+      background: var(--parchment);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: .62rem;
+      font-weight: 700;
+      color: var(--ink-3);
+      transition: all .3s ease;
+      margin-bottom: .4rem;
+    }
+    .step-label {
+      font-family: 'Cinzel', serif;
+      font-size: .58rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      text-align: center;
+      transition: color .3s;
+      opacity: .6;
+    }
+    .progress-step.active .step-dot {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--gold-pale);
+      box-shadow: 0 0 0 4px rgba(36,26,16,.08);
+    }
+    .progress-step.active .step-label { color: var(--ink); opacity: 1; font-weight: 700; }
+    .progress-step.done .step-dot {
+      background: var(--g-sage);
+      border-color: var(--sage-dk);
+      color: white;
+    }
+    .progress-step.done .step-label { color: var(--sage-dk); opacity: .85; }
+
+    /* ─── Sections ─── */
+    .section { display: none; animation: reveal .45s ease; }
     .section.active { display: block; }
 
-    /* ── Cards ── */
+    /* ─── Cards ─── */
     .card {
       background: var(--parchment-lt);
-      border: 1px solid rgba(196,151,90,0.2);
+      border: 1px solid rgba(196,146,80,.18);
       border-radius: 3px;
-      padding: 2rem;
+      padding: 2rem 2.2rem;
       margin-bottom: 1.8rem;
       position: relative;
-      box-shadow: 0 4px 20px var(--shadow);
+      box-shadow: 0 4px 24px var(--shadow);
+      transition: box-shadow .3s;
     }
     .card::before {
       content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; border-radius: 3px 3px 0 0;
     }
-    .card.sage::before   { background: var(--grad-sage); }
-    .card.blush::before  { background: var(--grad-blush); }
-    .card.lav::before    { background: var(--grad-lav); }
-    .card.gold::before   { background: var(--grad-gold); }
-    .card.warm::before   { background: var(--grad-warm); }
+    .card.sage::before  { background: var(--g-sage); }
+    .card.blush::before { background: var(--g-blush); }
+    .card.lav::before   { background: var(--g-lav); }
+    .card.gold::before  { background: var(--g-gold); }
+    .card.warm::before  { background: var(--g-warm); }
+    .card.earth::before { background: var(--g-earth); }
+
+    /* Hero card — larger, centered */
+    .card-hero {
+      padding: 3rem 2.5rem 2.5rem;
+      text-align: center;
+    }
 
     .card-header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.2rem;
-      padding-bottom: 0.9rem;
-      border-bottom: 1px solid rgba(196,151,90,0.18);
+      gap: .8rem;
+      margin-bottom: 1.3rem;
+      padding-bottom: .9rem;
+      border-bottom: 1px solid rgba(196,146,80,.16);
       flex-wrap: wrap;
     }
-    .card-sym { font-size: 1.2rem; color: var(--gold); flex-shrink: 0; }
     .card-header h2 {
       font-family: 'Cinzel', serif;
-      font-size: 1.15rem;
+      font-size: var(--f-lg);
       font-weight: 700;
+      letter-spacing: .03em;
       color: var(--ink);
-      letter-spacing: 0.03em;
     }
-    .timing-tag {
+    .time-pill {
       margin-left: auto;
       font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-light);
-      border: 1px solid rgba(196,151,90,0.28);
-      padding: 0.18rem 0.6rem;
+      font-size: var(--f-xs);
+      letter-spacing: .08em;
+      color: var(--ink-3);
+      border: 1px solid rgba(196,146,80,.28);
+      padding: .18rem .65rem;
       border-radius: 2px;
+      white-space: nowrap;
     }
 
+    /* Icon badge */
+    .icon-badge {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      color: white;
+    }
+    .ib-sage  { background: var(--g-sage); }
+    .ib-blush { background: var(--g-blush); }
+    .ib-lav   { background: var(--g-lav); }
+    .ib-gold  { background: var(--g-gold); }
+    .ib-warm  { background: var(--g-warm); }
+
+    /* Body text */
     .body-text {
-      font-size: 1.05rem;
+      font-size: var(--f-md);
       line-height: 1.8;
-      color: var(--ink-faded);
-      margin-bottom: 1rem;
+      color: var(--ink-2);
+      margin-bottom: .9rem;
     }
+    .body-text:last-child { margin-bottom: 0; }
 
-    /* ── Pass reminder ── */
-    .pass-note {
-      display: flex;
-      gap: 0.6rem;
-      background: rgba(122,158,126,0.08);
-      border-left: 3px solid var(--sage);
-      padding: 0.75rem 1rem;
-      border-radius: 0 6px 6px 0;
-      margin-bottom: 1.4rem;
-      font-size: 0.97rem;
-      color: var(--ink-faded);
+    /* ─── Pull Quote ─── */
+    .pull-quote {
+      position: relative;
+      padding: 2rem 2.2rem 2rem 3rem;
+      margin: 1.8rem 0;
+    }
+    .pull-quote::before {
+      content: '\201C';
+      position: absolute;
+      left: .2rem; top: -.3rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--sage-lt);
+      pointer-events: none;
+    }
+    .pull-quote p {
+      font-size: clamp(1.25rem, 2.5vw, 1.6rem);
       font-style: italic;
+      line-height: 1.6;
+      color: var(--ink);
+      font-weight: 400;
     }
-    .pass-sym { color: var(--sage-dk); flex-shrink: 0; }
+    .pull-quote cite {
+      display: block;
+      margin-top: .7rem;
+      font-size: var(--f-sm);
+      font-family: 'Cinzel', serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--sage-dk);
+      font-style: normal;
+    }
 
-    /* ── Info blocks ── */
+    /* ─── Ornament divider ─── */
+    .ornament-divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 2rem 0;
+      color: rgba(196,146,80,.45);
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(196,146,80,.22);
+    }
+    .ornament-divider span {
+      font-family: 'Cinzel', serif;
+      font-size: .65rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ─── Pass note ─── */
+    .pass-note {
+      display: flex; gap: .65rem;
+      background: rgba(122,158,126,.07);
+      border-left: 3px solid var(--sage);
+      padding: .8rem 1rem;
+      border-radius: 0 4px 4px 0;
+      margin-bottom: 1.4rem;
+      font-size: var(--f-base);
+      font-style: italic;
+      color: var(--ink-2);
+    }
+    .pass-sym { color: var(--sage-dk); flex-shrink: 0; margin-top: .1rem; }
+
+    /* ─── Info blocks ─── */
     .info-block {
-      padding: 1rem 1.3rem;
+      padding: 1.1rem 1.4rem;
       border-radius: 3px;
-      margin-bottom: 0.9rem;
+      margin-bottom: 1rem;
     }
     .info-block h3 {
       font-family: 'Cinzel', serif;
-      font-size: 0.8rem;
+      font-size: var(--f-xs);
       font-weight: 700;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.55rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .6rem;
     }
     .info-block ul, .info-block ol {
       list-style: none;
-      color: var(--ink-faded);
+      color: var(--ink-2);
       line-height: 1.9;
-      font-size: 1rem;
+      font-size: var(--f-base);
     }
-    .info-block ul li::before { content: "◆  "; font-size: 0.55rem; }
-    .info-block ol { counter-reset: item; }
-    .info-block ol li { counter-increment: item; }
-    .info-block ol li::before { content: counter(item) ". "; font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; }
+    .info-block ul li { padding-left: 1.1rem; position: relative; }
+    .info-block ul li::before {
+      content: '◆';
+      position: absolute; left: 0; top: .1rem;
+      font-size: .45rem; color: currentColor; opacity: .7;
+    }
+    .ib-sage  { background: rgba(122,158,126,.08); }
+    .ib-sage h3  { color: var(--sage-dk); }
+    .ib-sage ul li::before { color: var(--sage-dk); }
+    .ib-blush { background: rgba(232,165,152,.1); }
+    .ib-blush h3 { color: var(--blush-dk); }
+    .ib-blush ul li::before { color: var(--blush-dk); }
+    .ib-lav   { background: rgba(184,168,208,.1); }
+    .ib-lav h3   { color: var(--lav-dk); }
+    .ib-lav ul li::before { color: var(--lav-dk); }
+    .ib-gold  { background: rgba(196,146,80,.08); }
+    .ib-gold h3  { color: var(--gold); }
+    .ib-gold ul li::before { color: var(--gold); }
 
-    .info-block.sage     { background: rgba(122,158,126,0.08); }
-    .info-block.sage h3  { color: var(--sage-dk); }
-    .info-block.sage ul li::before { color: var(--sage-dk); }
+    /* ─── Callout ─── */
+    .callout {
+      border-radius: 3px;
+      padding: 1.3rem 1.6rem;
+      margin: 1.3rem 0;
+      border: 1px solid;
+    }
+    .callout-label {
+      font-family: 'Cinzel', serif;
+      font-size: var(--f-xs);
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: .45rem;
+    }
+    .callout p {
+      font-size: var(--f-md);
+      font-style: italic;
+      line-height: 1.75;
+      color: var(--ink-2);
+    }
+    .callout strong { font-style: normal; color: var(--ink); }
+    .callout.sage  { background: rgba(122,158,126,.07); border-color: rgba(122,158,126,.28); }
+    .callout.sage .callout-label { color: var(--sage-dk); }
+    .callout.blush { background: rgba(232,165,152,.09); border-color: rgba(232,165,152,.3); }
+    .callout.blush .callout-label { color: var(--blush-dk); }
+    .callout.gold  { background: rgba(196,146,80,.06); border-color: rgba(196,146,80,.25); }
+    .callout.gold .callout-label { color: var(--gold); }
 
-    .info-block.blush    { background: rgba(232,165,152,0.1); }
-    .info-block.blush h3 { color: var(--blush-dk); }
-    .info-block.blush ul li::before { color: var(--blush-dk); }
-
-    .info-block.lav      { background: rgba(184,168,208,0.1); }
-    .info-block.lav h3   { color: var(--lav-dk); }
-    .info-block.lav ul li::before { color: var(--lav-dk); }
-
-    .info-block.gold     { background: rgba(196,151,90,0.07); }
-    .info-block.gold h3  { color: var(--gold); }
-    .info-block.gold ul li::before { color: var(--gold); }
-
-    /* ── Strategy grid ── */
+    /* ─── Strategy grid ─── */
     .strategy-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 1.1rem;
-      margin-bottom: 1.4rem;
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+      gap: 1.15rem;
+      margin-bottom: 1.5rem;
     }
-    .strategy-card {
+    .sc {
       background: var(--parchment-lt);
-      border: 1px solid rgba(196,151,90,0.2);
+      border: 1px solid rgba(196,146,80,.18);
       border-radius: 3px;
       overflow: hidden;
-      transition: transform 0.28s, box-shadow 0.28s;
-      cursor: default;
+      transition: transform .28s, box-shadow .28s;
     }
-    .strategy-card:hover {
+    .sc:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 24px var(--shadow);
+      box-shadow: 0 10px 30px var(--shadow-lg);
     }
-    .strategy-card-top {
-      padding: 0.9rem 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
+    .sc-top {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .85rem 1.15rem;
     }
-    .strategy-card-top span {
-      font-size: 1.3rem;
-    }
-    .strategy-card-top h3 {
+    .sc-top .sc-emoji { font-size: 1.25rem; }
+    .sc-top h3 {
       font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
+      font-size: .68rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.95);
+      letter-spacing: .1em;
       text-transform: uppercase;
+      color: rgba(255,255,255,.94);
+      line-height: 1.4;
     }
-    .strategy-card-body {
-      padding: 0.9rem 1.1rem;
-      font-size: 1rem;
+    .sc-sage  .sc-top { background: var(--g-sage); }
+    .sc-blush .sc-top { background: var(--g-blush); }
+    .sc-lav   .sc-top { background: var(--g-lav); }
+    .sc-gold  .sc-top { background: var(--g-gold); }
+    .sc-body {
+      padding: .9rem 1.15rem 1.1rem;
+      font-size: var(--f-base);
       line-height: 1.72;
-      color: var(--ink-faded);
+      color: var(--ink-2);
     }
-    .sc-sage  .strategy-card-top { background: var(--grad-sage); }
-    .sc-blush .strategy-card-top { background: var(--grad-blush); }
-    .sc-lav   .strategy-card-top { background: var(--grad-lav); }
-    .sc-gold  .strategy-card-top { background: var(--grad-gold); }
 
-    /* ── Prompt list ── */
-    .prompt-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
+    /* ─── Distinction columns ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.2rem;
     }
+    @media (max-width: 540px) { .two-col { grid-template-columns: 1fr; } }
+    .two-col-item {
+      padding: 1rem 1.2rem;
+      border-radius: 3px;
+    }
+    .two-col-item h4 {
+      font-family: 'Cinzel', serif;
+      font-size: var(--f-xs);
+      font-weight: 700;
+      letter-spacing: .08em;
+      margin-bottom: .5rem;
+    }
+    .two-col-item p { font-size: .97rem; color: var(--ink-2); line-height: 1.65; }
+    .tci-sage  { background: rgba(122,158,126,.08); }
+    .tci-sage h4  { color: var(--sage-dk); }
+    .tci-blush { background: rgba(232,165,152,.1); }
+    .tci-blush h4 { color: var(--blush-dk); }
+
+    /* ─── Agreements ─── */
+    .agreements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: .7rem;
+    }
+    .agreement-item {
+      background: rgba(196,146,80,.06);
+      border: 1px solid rgba(196,146,80,.2);
+      border-radius: 3px;
+      padding: .85rem 1rem;
+      font-family: 'Cinzel', serif;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      color: var(--ink-2);
+      text-align: center;
+      line-height: 1.55;
+    }
+    .ag-sym { color: var(--gold); display: block; margin-bottom: .3rem; font-size: .9rem; }
+
+    /* ─── Discussion prompts ─── */
+    .prompt-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
     .prompt-list li {
       background: var(--parchment-lt);
-      border: 1px solid rgba(196,151,90,0.18);
+      border: 1px solid rgba(196,146,80,.16);
       border-left: 3px solid var(--blush-dk);
       border-radius: 0 3px 3px 0;
-      padding: 1rem 1.2rem;
-      font-size: 1rem;
-      color: var(--ink-faded);
-      line-height: 1.7;
+      padding: 1rem 1.3rem;
       box-shadow: 0 2px 8px var(--shadow);
     }
     .prompt-list li strong {
       display: block;
       font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
+      font-size: var(--f-xs);
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--blush-dk);
-      margin-bottom: 0.3rem;
+      margin-bottom: .3rem;
     }
+    .prompt-list li p { font-size: var(--f-base); color: var(--ink-2); line-height: 1.7; }
 
-    /* ── Callout / bridge ── */
-    .callout {
-      background: rgba(122,158,126,0.07);
-      border: 1px solid rgba(122,158,126,0.25);
-      border-radius: 3px;
-      padding: 1.3rem 1.6rem;
-      margin: 1.2rem 0;
-    }
-    .callout-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--sage-dk);
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    .callout p {
-      font-size: 1.05rem;
-      font-style: italic;
-      color: var(--ink-faded);
-      line-height: 1.75;
-    }
-    .callout strong { color: var(--ink); font-style: normal; }
-
-    /* ── Agreements grid ── */
-    .agreements-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-      gap: 0.7rem;
-    }
-    .agreement-item {
-      background: rgba(196,151,90,0.06);
-      border: 1px solid rgba(196,151,90,0.2);
-      border-radius: 3px;
-      padding: 0.85rem 1rem;
-      font-family: 'Cinzel', serif;
-      font-size: 0.73rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      color: var(--ink-faded);
-      text-align: center;
-      line-height: 1.55;
-    }
-    .agreement-item .ag-sym {
-      color: var(--gold);
-      display: block;
-      margin-bottom: 0.3rem;
-      font-size: 0.95rem;
-    }
-
-    /* ── Closing affirmation ── */
-    .affirmation {
-      background: var(--ink);
-      border-radius: 3px;
-      padding: 1.8rem 2rem;
-      text-align: center;
-      margin-top: 1.5rem;
-    }
-    .affirmation p {
-      font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
-      line-height: 1.75;
-      color: var(--gold-pale);
-      letter-spacing: 0.04em;
-    }
-
-    /* ── Expandable fac note ── */
+    /* ─── Facilitator toggle ─── */
     .fac-toggle {
-      background: rgba(122,158,126,0.06);
-      border: 1px solid rgba(122,158,126,0.2);
+      background: rgba(122,158,126,.06);
+      border: 1px solid rgba(122,158,126,.2);
       border-radius: 3px;
       overflow: hidden;
       margin-top: 1.2rem;
     }
     .fac-btn {
-      width: 100%;
-      background: none;
-      border: none;
-      padding: 0.75rem 1.1rem;
-      text-align: left;
-      cursor: pointer;
-      font-family: 'Cinzel', serif;
-      font-size: 0.67rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+      width: 100%; background: none; border: none;
+      padding: .7rem 1.1rem; text-align: left; cursor: pointer;
+      font-family: 'Cinzel', serif; font-size: var(--f-xs);
+      font-weight: 700; letter-spacing: .1em;
       color: var(--sage-dk);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      display: flex; align-items: center; gap: .5rem;
     }
-    .fac-btn-arrow { transition: transform 0.25s; }
-    .fac-btn-arrow.open { transform: rotate(90deg); }
-    .fac-content { display: none; padding: 0 1.1rem 1rem; font-size: 0.97rem; color: var(--ink-faded); line-height: 1.8; }
-    .fac-content.open { display: block; }
+    .fac-arrow { transition: transform .25s; display: inline-block; }
+    .fac-arrow.open { transform: rotate(90deg); }
+    .fac-content { display: none; padding: 0 1.1rem 1rem; font-size: .97rem; color: var(--ink-2); line-height: 1.8; }
+    .fac-content.open { display: block; animation: reveal .3s ease; }
     .fac-content strong { color: var(--ink); }
 
-    /* ── Footer ── */
+    /* ─── Reflection textarea ─── */
+    .reflection-area {
+      background: rgba(122,158,126,.05);
+      border: 1px dashed rgba(122,158,126,.3);
+      border-radius: 3px;
+      padding: 1.3rem 1.5rem;
+      margin-top: 1rem;
+    }
+    .reflection-area label {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: var(--f-xs);
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--sage-dk);
+      margin-bottom: .5rem;
+    }
+    .reflection-area textarea {
+      width: 100%;
+      min-height: 80px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid rgba(122,158,126,.25);
+      border-radius: 2px;
+      padding: .65rem .85rem;
+      font-family: 'EB Garamond', serif;
+      font-size: var(--f-base);
+      color: var(--ink);
+      line-height: 1.7;
+      resize: vertical;
+      transition: border-color .25s, box-shadow .25s, background .25s;
+    }
+    .reflection-area textarea:focus {
+      outline: none;
+      border-color: var(--sage);
+      background: rgba(255,255,255,.85);
+      box-shadow: 0 0 0 3px rgba(122,158,126,.12);
+    }
+    .reflection-area textarea::placeholder { color: var(--ink-3); font-style: italic; }
+
+    /* ─── Affirmation banner ─── */
+    .affirmation {
+      background: var(--ink);
+      border-radius: 3px;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      margin: 1.8rem 0;
+    }
+    .affirmation p {
+      font-family: 'Cinzel', serif;
+      font-size: var(--f-base);
+      line-height: 1.8;
+      color: var(--gold-pale);
+      letter-spacing: .03em;
+    }
+
+    /* ─── Nav buttons (prev / next) ─── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2.5rem;
+      gap: 1rem;
+    }
+    .btn-nav {
+      font-family: 'Cinzel', serif;
+      font-size: var(--f-xs);
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .65rem 1.6rem;
+      border-radius: 2px;
+      border: 1px solid;
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .btn-prev {
+      background: transparent;
+      border-color: rgba(196,146,80,.35);
+      color: var(--ink-3);
+    }
+    .btn-prev:hover { background: rgba(196,146,80,.08); border-color: var(--gold); color: var(--ink); }
+    .btn-next {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--gold-pale);
+      box-shadow: 0 3px 12px rgba(36,26,16,.2);
+    }
+    .btn-next:hover {
+      background: var(--ink-2);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 18px rgba(36,26,16,.25);
+    }
+    .btn-nav:disabled { opacity: .35; pointer-events: none; }
+
+    /* ─── Footer ─── */
     .site-footer {
       text-align: center;
-      padding: 1.5rem;
+      padding: 1.8rem 1rem;
+      border-top: 1px solid rgba(196,146,80,.18);
       font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--ink-light);
-      border-top: 1px solid rgba(196,151,90,0.2);
-      margin-top: 2rem;
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-top: 1rem;
     }
 
     @media (max-width: 640px) {
-      .container { padding: 1.5rem 1rem 3rem; }
-      .site-header h1 { font-size: 1.75rem; }
+      .container { padding: 0 1rem 4rem; }
+      .card { padding: 1.5rem; }
+      .site-hero { padding: 2.5rem .5rem 2rem; }
       .strategy-grid { grid-template-columns: 1fr; }
+      .agreements-grid { grid-template-columns: 1fr 1fr; }
       body::after { inset: 4px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- floating bg runes -->
-  <div class="bg-rune" aria-hidden="true">✦</div>
-  <div class="bg-rune" aria-hidden="true">◈</div>
-  <div class="bg-rune" aria-hidden="true">✦</div>
-  <div class="bg-rune" aria-hidden="true">◈</div>
+  <!-- Floating background glyphs -->
+  <div class="glyph glyph-1" aria-hidden="true">✦</div>
+  <div class="glyph glyph-2" aria-hidden="true">◈</div>
+  <div class="glyph glyph-3" aria-hidden="true">✦</div>
+  <div class="glyph glyph-4" aria-hidden="true">◈</div>
 
   <div class="container">
 
-    <!-- Header -->
-    <header class="site-header">
-      <span class="header-eyebrow">ND &amp; Eating Disorders &nbsp;·&nbsp; Affinity Group</span>
-      <h1>Wired Differently,<br><em>Nourished</em> Differently</h1>
-      <p class="subtitle">Practical strategies for ND brains &amp; food</p>
-      <div class="header-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+    <!-- ══ HERO ══ -->
+    <header class="site-hero">
+      <span class="hero-eyebrow">ND &amp; Eating Disorders &nbsp;·&nbsp; Affinity Group</span>
+      <h1 class="hero-title">Wired Differently,<br><em>Nourished</em> Differently</h1>
+      <p class="hero-sub">Practical strategies for ND brains &amp; food</p>
+      <div class="hero-ornament">
+        <svg width="40" height="1" viewBox="0 0 40 1"><line x1="0" y1="0" x2="40" y2="0" stroke="currentColor" stroke-width="1"/></svg>
+        <span>✦</span>
+        <svg width="40" height="1" viewBox="0 0 40 1"><line x1="0" y1="0" x2="40" y2="0" stroke="currentColor" stroke-width="1"/></svg>
+      </div>
     </header>
 
-    <!-- Progress bar -->
-    <div class="progress-wrap">
-      <div class="progress-fill" id="progressFill" style="width: 20%"></div>
+    <!-- ══ PROGRESS STEPS ══ -->
+    <div class="progress-strip" id="progressStrip">
+      <div class="progress-step active" onclick="goTo(0)" id="step-0">
+        <div class="step-dot">I</div>
+        <span class="step-label">Welcome</span>
+      </div>
+      <div class="progress-step" onclick="goTo(1)" id="step-1">
+        <div class="step-dot">II</div>
+        <span class="step-label">The<br>Connection</span>
+      </div>
+      <div class="progress-step" onclick="goTo(2)" id="step-2">
+        <div class="step-dot">III</div>
+        <span class="step-label">Strategies</span>
+      </div>
+      <div class="progress-step" onclick="goTo(3)" id="step-3">
+        <div class="step-dot">IV</div>
+        <span class="step-label">Discussion</span>
+      </div>
+      <div class="progress-step" onclick="goTo(4)" id="step-4">
+        <div class="step-dot">V</div>
+        <span class="step-label">Closing</span>
+      </div>
     </div>
 
-    <!-- Nav -->
-    <nav class="nav-pills" role="tablist">
-      <button class="nav-pill active" onclick="showSection('welcome',this,20)">Welcome</button>
-      <button class="nav-pill" onclick="showSection('understanding',this,40)">The Connection</button>
-      <button class="nav-pill" onclick="showSection('strategies',this,60)">Strategies</button>
-      <button class="nav-pill" onclick="showSection('discussion',this,80)">Discussion</button>
-      <button class="nav-pill" onclick="showSection('closing',this,100)">Closing</button>
-    </nav>
+    <!-- ══════════════════════════════════
+         SECTION I — WELCOME
+    ══════════════════════════════════ -->
+    <div class="section active" id="sec-0">
 
-    <!-- ══ SECTION: WELCOME ══ -->
-    <div class="section active" id="welcome">
+      <div class="card warm card-hero">
+        <p class="hero-sub" style="font-size:1rem;letter-spacing:.08em;font-style:normal;font-family:'Cinzel',serif;color:var(--gold);text-transform:uppercase;margin-bottom:1.4rem;">A Space That Knows Your Brain</p>
 
-      <div class="card warm">
-        <div class="card-header">
-          <span class="card-sym">✦</span>
-          <h2>Welcome to This Space</h2>
-          <span class="timing-tag">5 min</span>
+        <div class="pull-quote">
+          <p>You don't have to explain yourself here — or perform okay-ness around food. Both are allowed to be complicated.</p>
         </div>
-        <p class="body-text">Welcome. This is a space built for people who know what it's like to have a complicated relationship with food <em>and</em> a brain that works differently. You don't have to explain yourself here — or perform okay-ness.</p>
-        <p class="body-text">Today we're not talking about rules, meal plans, or the right way to eat. We're talking about what actually helps — the real, sometimes messy, creative workarounds ND people use to take care of themselves. Because what works for neurotypical brains often doesn't work for ours, and that's not a personal failure. That's neuroscience.</p>
 
-        <div class="pass-note">
-          <span class="pass-sym">◇</span>
-          <span>You are always welcome to pass. Listening and breathing count as full participation here.</span>
-        </div>
+        <p class="body-text" style="text-align:left;margin-top:1.5rem;">Today we're not talking about rules, meal plans, or the right way to eat. We're talking about what <em>actually</em> helps — the real, sometimes messy, creative workarounds ND people find. Because what works for neurotypical brains often doesn't work for ours, and that is not a personal failure.</p>
+        <p class="body-text" style="text-align:left;">That's neuroscience.</p>
       </div>
 
       <div class="card sage">
         <div class="card-header">
-          <span class="card-sym">◈</span>
+          <div class="icon-badge ib-sage">◈</div>
           <h2>Group Agreements</h2>
         </div>
         <div class="agreements-grid">
-          <div class="agreement-item"><span class="ag-sym">◇</span>What's shared here, stays here</div>
+          <div class="agreement-item"><span class="ag-sym">◇</span>What's shared here stays here</div>
           <div class="agreement-item"><span class="ag-sym">◇</span>You can always pass</div>
           <div class="agreement-item"><span class="ag-sym">◇</span>Speak from your own experience</div>
           <div class="agreement-item"><span class="ag-sym">◇</span>No advice unless asked</div>
-          <div class="agreement-item"><span class="ag-sym">◇</span>All brains are welcome</div>
-          <div class="agreement-item"><span class="ag-sym">◇</span>Silence is sacred too</div>
+          <div class="agreement-item"><span class="ag-sym">◇</span>All brains belong here</div>
+          <div class="agreement-item"><span class="ag-sym">◇</span>Silence is valid too</div>
         </div>
       </div>
 
       <div class="card lav">
         <div class="card-header">
-          <span class="card-sym">✦</span>
+          <div class="icon-badge ib-lav">✦</div>
           <h2>Check-In Circle</h2>
-          <span class="timing-tag">10 min</span>
+          <span class="time-pill">10 min</span>
         </div>
-        <p class="body-text">Go around the room. Take what feels right, leave what doesn't.</p>
-        <div class="info-block lav">
-          <h3>One or Two Questions — Your Choice</h3>
+        <div class="pass-note">
+          <span class="pass-sym">◇</span>
+          <span>Take what fits. Listening counts as full participation.</span>
+        </div>
+        <div class="info-block ib-lav">
+          <h3>Choose One or Two</h3>
           <ul>
-            <li>How's your nervous system right now? (Flooded, frazzled, okay, somewhere in between?)</li>
+            <li>How's your nervous system right now? Flooded, frazzled, okay, somewhere in between?</li>
             <li>One word for your relationship with food today — no explanation needed</li>
             <li>One small hope for this hour</li>
           </ul>
         </div>
+        <div class="reflection-area">
+          <label>Your Word for Today</label>
+          <textarea placeholder="Just one word is enough…"></textarea>
+        </div>
       </div>
 
-    </div><!-- /welcome -->
+      <div class="nav-buttons">
+        <button class="btn-nav btn-prev" disabled>← Back</button>
+        <button class="btn-nav btn-next" onclick="goTo(1)">The Connection →</button>
+      </div>
+    </div>
 
-    <!-- ══ SECTION: UNDERSTANDING ══ -->
-    <div class="section" id="understanding">
+    <!-- ══════════════════════════════════
+         SECTION II — THE CONNECTION
+    ══════════════════════════════════ -->
+    <div class="section" id="sec-1">
 
       <div class="card blush">
         <div class="card-header">
-          <span class="card-sym">◈</span>
+          <div class="icon-badge ib-blush">🧠</div>
           <h2>Why Food is Hard for ND Brains</h2>
-          <span class="timing-tag">10 min</span>
+          <span class="time-pill">10 min</span>
         </div>
-        <p class="body-text">ND brains — whether ADHD, autistic, or both — often have a different relationship with <em>interoception</em>: the body's ability to sense internal signals like hunger, fullness, and thirst. When interoception is muted, unreliable, or works on a time delay, eating "normally" is genuinely harder. Not because of character. Because of wiring.</p>
-        <p class="body-text">Add in sensory sensitivities around food textures and smells, executive function challenges that make cooking feel impossible, and emotional dysregulation that turns hunger and fullness into background noise — and food becomes a complicated daily negotiation, not a simple choice.</p>
+        <p class="body-text">ND brains — whether ADHD, autistic, or both — often have a different relationship with <em>interoception</em>: the body's ability to sense internal signals like hunger, fullness, and thirst. When interoception is muted, delayed, or unreliable, eating "normally" is genuinely harder. Not because of character. Because of wiring.</p>
+        <p class="body-text">Add sensory sensitivities, executive function challenges that make cooking feel impossible, and emotional dysregulation that drowns out hunger and fullness — and food becomes a complicated daily negotiation, not a simple choice.</p>
 
-        <div class="callout">
+        <div class="callout sage">
           <span class="callout-label">Research Note</span>
           <p>Studies show autistic people are significantly more likely to experience ARFID, anorexia, and binge eating. ADHD is strongly linked to binge-restrict cycles. <strong>This isn't coincidence — it's neurobiology.</strong></p>
         </div>
       </div>
 
+      <div class="ornament-divider"><span>◆ &nbsp; ◆ &nbsp; ◆</span></div>
+
       <div class="card sage">
         <div class="card-header">
-          <span class="card-sym">✦</span>
+          <div class="icon-badge ib-sage">🔄</div>
           <h2>The Shame Loop</h2>
         </div>
-        <p class="body-text">When eating feels chaotic or out of control, we often blame ourselves. "I should be able to do this basic human thing." But the shame spiral creates more nervous system dysregulation — which makes eating even harder. It's a loop, not a character flaw.</p>
+        <p class="body-text">When eating feels chaotic, we often blame ourselves: <em>"I should be able to do this basic human thing."</em> But the shame spiral creates more nervous system dysregulation — which makes eating even harder. It's a loop, not a character flaw.</p>
 
-        <div class="info-block sage">
-          <h3>What the Loop Looks Like</h3>
-          <ul>
-            <li>Can't initiate eating → skip meals → dysregulation spikes</li>
-            <li>Sensory overwhelm → restrict → binge → shame</li>
-            <li>Emotional flooding → eating to regulate → guilt → more flooding</li>
-            <li>Shame about the loop → harder to ask for help</li>
-          </ul>
+        <div class="two-col">
+          <div class="two-col-item tci-blush">
+            <h4>What the Loop Says</h4>
+            <p>"I should be able to handle this. Normal people eat. Why is this so hard for me?"</p>
+          </div>
+          <div class="two-col-item tci-sage">
+            <h4>What's Actually True</h4>
+            <p>Your nervous system is working exactly as it was built to. The loop is real — and it's not about willpower.</p>
+          </div>
         </div>
 
         <div class="fac-toggle">
           <button class="fac-btn" onclick="toggleFac(this)">
-            <span class="fac-btn-arrow">▶</span>
-            FACILITATOR NOTE — SITTING WITH THIS
+            <span class="fac-arrow">▶</span>
+            FACILITATOR NOTE
           </button>
           <div class="fac-content">
-            <p>Pause here and invite reflection: <strong>"Does any of this sound familiar — even a little bit?"</strong> You don't need to fix the loop today. Naming it is already something. Give a moment of quiet before moving on.</p>
+            <p>Pause here. Ask: <strong>"Does any of this sound familiar — even a little bit?"</strong> You don't need to fix the loop today. Naming it is already something. Give the room a genuine moment of quiet before continuing.</p>
           </div>
         </div>
       </div>
 
-    </div><!-- /understanding -->
+      <div class="pull-quote" style="margin-top:0;">
+        <p>Naming the loop is not the same as being stuck in it. It is the beginning of something different.</p>
+      </div>
 
-    <!-- ══ SECTION: STRATEGIES ══ -->
-    <div class="section" id="strategies">
+      <div class="nav-buttons">
+        <button class="btn-nav btn-prev" onclick="goTo(0)">← Welcome</button>
+        <button class="btn-nav btn-next" onclick="goTo(2)">Strategies →</button>
+      </div>
+    </div>
 
-      <div class="card sage">
+    <!-- ══════════════════════════════════
+         SECTION III — STRATEGIES
+    ══════════════════════════════════ -->
+    <div class="section" id="sec-2">
+
+      <div class="card earth">
         <div class="card-header">
-          <span class="card-sym">✦</span>
+          <div class="icon-badge ib-warm">✦</div>
           <h2>Practical Strategies for ND Brains</h2>
-          <span class="timing-tag">15 min</span>
+          <span class="time-pill">15 min</span>
         </div>
         <p class="body-text">These aren't rules. They're starting points — things other ND people have found actually useful. Take what fits. Leave the rest.</p>
       </div>
 
       <div class="strategy-grid">
-
-        <div class="strategy-card sc-sage">
-          <div class="strategy-card-top">
-            <span>⏰</span>
-            <h3>External Hunger Cues</h3>
-          </div>
-          <div class="strategy-card-body">
-            If your hunger signals are unreliable, external cues can substitute. Phone alarms, watch vibrations, or anchoring eating to an existing routine — after morning meds, at the halfway point of the workday — instead of waiting to feel hungry.
-          </div>
+        <div class="sc sc-sage">
+          <div class="sc-top"><span class="sc-emoji">⏰</span><h3>External Hunger Cues</h3></div>
+          <div class="sc-body">If your internal hunger signals are unreliable, external cues can substitute. Phone alarms, watch vibrations, or anchoring eating to an existing routine — after morning meds, at the midpoint of the workday — instead of waiting to feel hungry.</div>
         </div>
-
-        <div class="strategy-card sc-blush">
-          <div class="strategy-card-top">
-            <span>🧩</span>
-            <h3>Safe Foods are Not Failures</h3>
-          </div>
-          <div class="strategy-card-body">
-            Having go-to foods that feel predictable, low-effort, and sensory-okay is adaptive, not avoidance. Building a personal "safe food list" you return to on hard days is a valid strategy. Full stop.
-          </div>
+        <div class="sc sc-blush">
+          <div class="sc-top"><span class="sc-emoji">🧩</span><h3>Safe Foods Are Not Failures</h3></div>
+          <div class="sc-body">Having go-to foods that feel predictable and sensory-okay is adaptive, not avoidance. A personal "safe food list" you return to on hard days is a valid strategy — full stop.</div>
         </div>
-
-        <div class="strategy-card sc-lav">
-          <div class="strategy-card-top">
-            <span>🧠</span>
-            <h3>Reduce the Decision Load</h3>
-          </div>
-          <div class="strategy-card-body">
-            Decision fatigue hits ND brains hard. A rotating breakfast, pre-decided snacks, a short "good enough meals" list — reducing choices preserves energy for things that matter more to you.
-          </div>
+        <div class="sc sc-lav">
+          <div class="sc-top"><span class="sc-emoji">🧠</span><h3>Reduce the Decision Load</h3></div>
+          <div class="sc-body">Decision fatigue hits ND brains hard. A rotating breakfast, pre-decided snacks, a short "good enough meals" list — reducing choices preserves energy for things that matter more to you.</div>
         </div>
-
-        <div class="strategy-card sc-gold">
-          <div class="strategy-card-top">
-            <span>🎧</span>
-            <h3>Pair Eating with Something Regulating</h3>
-          </div>
-          <div class="strategy-card-body">
-            Eating in silence can feel activating or dissociating for ND people. Pairing meals with a podcast, show, or background noise can meaningfully lower the threshold to actually eat.
-          </div>
+        <div class="sc sc-gold">
+          <div class="sc-top"><span class="sc-emoji">🎧</span><h3>Pair Eating with Regulation</h3></div>
+          <div class="sc-body">Eating in silence can feel activating or dissociating for ND people. Pairing meals with a podcast, show, or background noise can meaningfully lower the threshold to actually eat.</div>
         </div>
-
-        <div class="strategy-card sc-sage">
-          <div class="strategy-card-top">
-            <span>🌡️</span>
-            <h3>Translate Hunger Differently</h3>
-          </div>
-          <div class="strategy-card-body">
-            Instead of "am I hungry?" try: "am I low energy, irritable, or losing focus?" These are often how hunger shows up in ND bodies — the body's way of speaking a different dialect.
-          </div>
+        <div class="sc sc-sage">
+          <div class="sc-top"><span class="sc-emoji">🌡️</span><h3>Translate Hunger Differently</h3></div>
+          <div class="sc-body">Instead of "am I hungry?" try: "am I low energy, irritable, losing focus?" These are often how hunger shows up in ND bodies — the body speaking a different dialect.</div>
         </div>
-
-        <div class="strategy-card sc-blush">
-          <div class="strategy-card-top">
-            <span>🛒</span>
-            <h3>Shop for Your Worst-Day Self</h3>
-          </div>
-          <div class="strategy-card-body">
-            Stock your kitchen for the version of you who is depleted and can't cook — not the aspirational version. Keeping easy, accessible food on hand means you're more likely to eat something when it counts.
-          </div>
+        <div class="sc sc-blush">
+          <div class="sc-top"><span class="sc-emoji">🛒</span><h3>Shop for Your Worst-Day Self</h3></div>
+          <div class="sc-body">Stock your kitchen for the version of you who is depleted and can't cook — not the aspirational version. Easy, accessible food on hand means you're more likely to eat something when it counts.</div>
         </div>
-
-        <div class="strategy-card sc-lav">
-          <div class="strategy-card-top">
-            <span>👥</span>
-            <h3>Body Doubling</h3>
-          </div>
-          <div class="strategy-card-body">
-            Eating with someone — virtually or in person, even without talking — can help with initiation. Body doubling activates different neural pathways for many ND people and makes the whole thing feel more doable.
-          </div>
+        <div class="sc sc-lav">
+          <div class="sc-top"><span class="sc-emoji">👥</span><h3>Body Doubling</h3></div>
+          <div class="sc-body">Eating with someone — virtually or in person, even without talking — can help with initiation. Body doubling activates different neural pathways for many ND people.</div>
         </div>
-
-        <div class="strategy-card sc-gold">
-          <div class="strategy-card-top">
-            <span>💛</span>
-            <h3>Enough is a Moving Target</h3>
-          </div>
-          <div class="strategy-card-body">
-            Some days "enough" is a full meal. Some days it's crackers and cheese at 10pm. Narrowing the gap between "what I ate" and "what I think I should have eaten" is its own form of progress.
-          </div>
+        <div class="sc sc-gold">
+          <div class="sc-top"><span class="sc-emoji">💛</span><h3>Enough Is a Moving Target</h3></div>
+          <div class="sc-body">Some days "enough" is a full meal. Some days it's crackers and cheese at 10pm. Narrowing the gap between what you ate and what you think you should have eaten is its own progress.</div>
         </div>
+      </div>
 
+      <div class="ornament-divider"><span>reflection</span></div>
+
+      <div class="card gold">
+        <div class="card-header">
+          <div class="icon-badge ib-gold">◈</div>
+          <h2>What Works for You?</h2>
+        </div>
+        <p class="body-text">You don't have to share this with anyone. But taking a moment to name it — even privately — can be useful.</p>
+        <div class="reflection-area">
+          <label>One Strategy That Has Ever Helped You — Even a Little</label>
+          <textarea placeholder="It doesn't have to be perfect or consistent…"></textarea>
+        </div>
       </div>
 
       <div class="affirmation">
-        <p>Taking care of your body in a way that works for your brain is not settling.<br>It is creativity. It is survival. It is worth recognizing.</p>
+        <p>Taking care of your body in a way that works for your brain is not settling.<br>It is creativity. It is survival. It counts.</p>
       </div>
 
-    </div><!-- /strategies -->
+      <div class="nav-buttons">
+        <button class="btn-nav btn-prev" onclick="goTo(1)">← The Connection</button>
+        <button class="btn-nav btn-next" onclick="goTo(3)">Discussion →</button>
+      </div>
+    </div>
 
-    <!-- ══ SECTION: DISCUSSION ══ -->
-    <div class="section" id="discussion">
+    <!-- ══════════════════════════════════
+         SECTION IV — DISCUSSION
+    ══════════════════════════════════ -->
+    <div class="section" id="sec-3">
 
       <div class="card lav">
         <div class="card-header">
-          <span class="card-sym">◈</span>
+          <div class="icon-badge ib-lav">💬</div>
           <h2>Group Discussion</h2>
-          <span class="timing-tag">20 min</span>
+          <span class="time-pill">20 min</span>
         </div>
         <div class="pass-note">
           <span class="pass-sym">◇</span>
-          <span>These are invitations, not obligations. You can share, listen, or just breathe.</span>
+          <span>These are invitations, not obligations. Listening, breathing, and nodding all count.</span>
         </div>
-
         <ul class="prompt-list">
           <li>
             <strong>Opening Round</strong>
-            What's one way your ND brain makes food harder — something you've never quite been able to explain to someone who doesn't share this experience?
+            <p>What's one way your ND brain makes food harder — something you've never quite been able to explain to someone who doesn't share this experience?</p>
           </li>
           <li>
             <strong>Strategy Sharing</strong>
-            What's something that actually works for you — even a little bit, even imperfectly — that you'd never find in a nutrition guide?
+            <p>What's something that actually works for you — even a little, even imperfectly — that you'd never find in a nutrition guide?</p>
           </li>
           <li>
             <strong>The Shame Piece</strong>
-            Where does shame show up for you around food? What does it tell you? What do you wish it understood about your brain?
+            <p>Where does shame show up for you around food? What does it tell you? What do you wish it understood about your brain?</p>
           </li>
           <li>
             <strong>Reclaiming Something</strong>
-            Is there something about your relationship with food or your body that you've been told is "wrong" — that you're starting to understand differently now?
+            <p>Is there something about your relationship with food or your body you've been told is "wrong" — that you're starting to understand differently?</p>
           </li>
         </ul>
       </div>
 
       <div class="card blush">
         <div class="card-header">
-          <span class="card-sym">✦</span>
+          <div class="icon-badge ib-blush">✦</div>
           <h2>If Space Allows</h2>
         </div>
-        <div class="info-block blush">
+        <div class="info-block ib-blush">
           <h3>Going Deeper</h3>
           <ul>
             <li>What would it mean to take care of your body in a way that actually fits your brain — not the standard advice?</li>
@@ -788,72 +997,100 @@
         </div>
       </div>
 
-    </div><!-- /discussion -->
+      <div class="nav-buttons">
+        <button class="btn-nav btn-prev" onclick="goTo(2)">← Strategies</button>
+        <button class="btn-nav btn-next" onclick="goTo(4)">Closing →</button>
+      </div>
+    </div>
 
-    <!-- ══ SECTION: CLOSING ══ -->
-    <div class="section" id="closing">
+    <!-- ══════════════════════════════════
+         SECTION V — CLOSING
+    ══════════════════════════════════ -->
+    <div class="section" id="sec-4">
 
       <div class="card warm">
         <div class="card-header">
-          <span class="card-sym">✦</span>
+          <div class="icon-badge ib-warm">✦</div>
           <h2>Closing Round</h2>
-          <span class="timing-tag">5 min</span>
+          <span class="time-pill">5 min</span>
         </div>
-        <p class="body-text">Go around one more time. Take what fits.</p>
-        <div class="info-block gold">
-          <h3>One to Choose From</h3>
+        <p class="body-text">One last time around. Take what fits.</p>
+        <div class="info-block ib-gold">
+          <h3>Choose One</h3>
           <ul>
             <li>One word or sentence you're leaving with today</li>
             <li>Something that landed — an idea, a shift, a question</li>
-            <li>What you needed to hear — even if you're the one who said it</li>
+            <li>What you needed to hear, even if you were the one who said it</li>
           </ul>
         </div>
       </div>
 
       <div class="card sage">
         <div class="card-header">
-          <span class="card-sym">◈</span>
+          <div class="icon-badge ib-sage">◈</div>
           <h2>Something to Carry With You</h2>
         </div>
-        <div class="callout">
+        <div class="callout gold">
           <span class="callout-label">A Reminder</span>
           <p>You are not failing at eating. You are navigating something genuinely complex with a brain that didn't come with a standard manual. <strong>Every small act of nourishment — whatever form it takes — counts.</strong></p>
         </div>
 
-        <div class="info-block sage">
-          <h3>Between Sessions</h3>
+        <div class="ornament-divider" style="margin:1.5rem 0 1.2rem;"><span>between now and next time</span></div>
+
+        <div class="info-block ib-sage">
+          <h3>Small Invitations</h3>
           <ul>
             <li>Notice once this week when hunger shows up as something other than hunger — irritability, brain fog, low energy</li>
             <li>Identify one "worst-day food" you could keep on hand</li>
             <li>Be curious instead of critical — even once</li>
           </ul>
         </div>
+
+        <div class="reflection-area" style="margin-top:1.2rem;">
+          <label>One Thing You're Taking With You</label>
+          <textarea placeholder="A word, a thought, a question — whatever showed up today…"></textarea>
+        </div>
       </div>
 
-      <div class="affirmation">
-        <p>Thank you for being here.<br>You belong in this room exactly as you are.</p>
+      <div class="pull-quote">
+        <p>Thank you for being here. You belong in this room exactly as you are.</p>
+        <cite>ND &amp; Eating Disorders Affinity Group</cite>
       </div>
 
-    </div><!-- /closing -->
+      <div class="nav-buttons">
+        <button class="btn-nav btn-prev" onclick="goTo(3)">← Discussion</button>
+        <button class="btn-nav btn-next" disabled>Complete ✦</button>
+      </div>
+    </div>
 
     <footer class="site-footer">
-      ND &amp; EATING DISORDERS AFFINITY GROUP &nbsp;·&nbsp; PRACTICAL STRATEGIES SESSION
+      ND &amp; Eating Disorders Affinity Group &nbsp;·&nbsp; Practical Strategies Session
     </footer>
 
   </div><!-- /container -->
 
   <script>
-    function showSection(id, btn, progress) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      btn.classList.add('active');
-      document.getElementById('progressFill').style.width = progress + '%';
+    const SECTIONS = ['sec-0','sec-1','sec-2','sec-3','sec-4'];
+    let current = 0;
+
+    function goTo(index) {
+      // Hide all sections
+      SECTIONS.forEach((id, i) => {
+        const s = document.getElementById(id);
+        s.classList.remove('active');
+        const step = document.getElementById('step-' + i);
+        step.classList.remove('active', 'done');
+        if (i < index)  step.classList.add('done');
+        if (i === index) step.classList.add('active');
+      });
+      // Show target
+      document.getElementById(SECTIONS[index]).classList.add('active');
+      current = index;
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function toggleFac(btn) {
-      const arrow = btn.querySelector('.fac-btn-arrow');
+      const arrow   = btn.querySelector('.fac-arrow');
       const content = btn.nextElementSibling;
       arrow.classList.toggle('open');
       content.classList.toggle('open');
